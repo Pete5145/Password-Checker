@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength Checker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <h1>Password Strength Checker</h1>
+                <form action="#">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control">
+                    <button type="submit" id="check" class="btn btn-primary mt-3">Check</button>
+                </form>
+                <div id="feedback"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Select all the elements of interest
+        let txtPasssword = document.getElementById("password");
+        let checkBtn = document.getElementById("check");
+        let feedback = document.getElementById("feedback");
+
+        checkBtn.addEventListener("click", validatePassword);
+
+        function validatePassword(e) {
+            e.preventDefault();
+            let userPassword = txtPasssword.value;
+            let strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+            let mediumRegex = /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
+            let weakRegex = /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{4,})/
+            
+            if (strongRegex.test(userPassword)) {
+                feedback.innerText = "Strong password";
+                feedback.style.color = "green";      
+            } else if (mediumRegex.test(userPassword)) {
+                feedback.innerText = "Medium password";
+                feedback.style.color = "orange";      
+            } else if (weakRegex.test(userPassword)) {
+                feedback.innerText = "Weak password";
+                feedback.style.color = "red";      
+            } else if (userPassword.length < 8) {
+                feedback.innerText = "The password must be at least 8 characters long";
+                feedback.style.color = "red";      
+            }
+        }
+
+        
+        
+    </script>
+</body>
+</html>
